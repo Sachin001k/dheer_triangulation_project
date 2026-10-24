@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Gallery Problem - Complete Polygon Analysis</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 50px 40px;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  .header p {
+    font-size: 1.2em;
+    opacity: 0.95;
+    margin-bottom: 20px;
+  }
+  .info-box {
+    background: #fff3e0;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border-left: 4px solid #FF9800;
+  }
+  .info-box h3 {
+    color: #FF6F00;
+    margin-bottom: 10px;
+  }
+  .info-box p {
+    color: #333;
+    line-height: 1.6;
+  }
+  .legend-box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: 600;
+  }
+  .color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  .content {
+    padding: 40px;
+  }
+  .formula-box {
+    background: #f0f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    margin-bottom: 30px;
+  }
+  .formula-box h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+  }
+  .formula-item {
+    margin-bottom: 15px;
+    font-family: monospace;
+    font-size: 1.1em;
+  }
+  .formula-item strong {
+    color: #667eea;
+  }
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .summary-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .summary-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .summary-table tr:hover {
+    background: #f5f5f5;
+  }
+  .summary-table tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  .polygon-section {
+    margin-bottom: 40px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f9f9f9;
+  }
+  .polygon-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .polygon-header h2 {
+    font-size: 1.8em;
+  }
+  .badge {
+    background: rgba(255,255,255,0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+  .polygon-data {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .data-section {
+    background: #f0f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+  }
+  .data-section h3 {
+    color: #667eea;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+  }
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .data-item {
+    background: white;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+  }
+  .data-label {
+    font-size: 0.85em;
+    color: #666;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .data-value {
+    font-size: 1.4em;
+    color: #667eea;
+    font-weight: bold;
+  }
+  .color-distribution {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+  }
+  .color-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .color-row:last-child {
+    border-bottom: none;
+  }
+  .color-bar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    flex-shrink: 0;
+  }
+  .color-text {
+    flex: 1;
+    font-weight: 600;
+  }
+  .color-count {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #667eea;
+    min-width: 60px;
+    text-align: right;
+  }
+  .guard-info {
+    background: #fff3e0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #FF9800;
+    margin-top: 10px;
+  }
+  .guard-info strong {
+    color: #FF6F00;
+  }
+  .footer {
+    background: #f8f9fa;
+    padding: 30px;
+    text-align: center;
+    color: #666;
+    border-top: 2px solid #e0e0e0;
+    margin-top: 40px;
+  }
+  @media (max-width: 1024px) {
+    .polygon-data {
+      grid-template-columns: 1fr;
+    }
+  }
+  .section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🏛️ Art Gallery Problem</h1>
+    <p>Complete Polygon Analysis with Triangulation & Guard Placement</p>
+    <div class="legend-box">
+      <div class="legend-item">
+        <div class="color-dot" style="background: #FF0000;"></div>
+        <span>Red Vertices</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-dot" style="background: #00CC00;"></div>
+        <span>Green Vertices</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-dot" style="background: #0066FF;"></div>
+        <span>Blue Vertices</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-dot" style="background: #FF0000; border: 3px solid #FF4500;"></div>
+        <span>Guard (with border)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="info-box">
+      <h3>📍 How to View Visualizations</h3>
+      <p>
+        To see the actual polygon visualizations (with shapes drawn), open the individual HTML files in your browser:
+      </p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>triangle.html</strong> - Simple triangle visualization</li>
+        <li><strong>random8.html</strong> - 8-vertex random polygon</li>
+        <li><strong>random12.html</strong> - 12-vertex random polygon</li>
+        <li><strong>random20.html</strong> - 20-vertex random polygon</li>
+        <li><strong>all_results.html</strong> - All 10 polygons with embedded visualizations</li>
+      </ul>
+      <p style="margin-top: 15px;">
+        This document provides the complete data and statistics for all polygons.
+      </p>
+    </div>
+
+    <div class="formula-box">
+      <h3>📐 Chvátal's Art Gallery Theorem</h3>
+      <div class="formula-item">
+        <strong>For any simple polygon with n vertices:</strong><br>
+        At most <strong>⌊n/3⌋</strong> guards are required and sometimes necessary to see every point in the polygon.
+      </div>
+      <div class="formula-item">
+        <strong>Examples:</strong>
+      </div>
+      <div style="margin-left: 20px;">
+        <div class="formula-item">n=8: ⌊8/3⌋ = ⌊2.67⌋ = <strong>2</strong> guards max ✓</div>
+        <div class="formula-item">n=12: ⌊12/3⌋ = ⌊4⌋ = <strong>4</strong> guards max ✓</div>
+        <div class="formula-item">n=20: ⌊20/3⌋ = ⌊6.67⌋ = <strong>6</strong> guards max ✓</div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <h2 style="color: #667eea; font-size: 2em; margin-bottom: 30px;">📊 Complete Polygon Analysis</h2>
+
+    <!-- STRUCTURAL POLYGONS -->
+    <div style="margin-bottom: 40px;">
+      <h3 style="color: #667eea; font-size: 1.5em; margin-bottom: 20px;">Structural Polygons</h3>
+
+      <!-- Triangle -->
+      <div class="polygon-section" id="triangle">
+        <div class="polygon-header">
+          <h2>Triangle</h2>
+          <span class="badge">3 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">3</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊3/3⌋ = 1</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">1</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 1 ≤ 1 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rectangle -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Rectangle</h2>
+          <span class="badge">4 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">4</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">2</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊4/3⌋ = 1</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">2</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">1</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 1 ≤ 1 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pentagon -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Pentagon</h2>
+          <span class="badge">5 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">5</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">3</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊5/3⌋ = 1</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">2</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">2</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 1 ≤ 1 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hexagon -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Hexagon</h2>
+          <span class="badge">6 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">6</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">4</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊6/3⌋ = 2</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">3</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">2</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 1 ≤ 2 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Octagon -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Octagon</h2>
+          <span class="badge">8 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">8</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">6</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">1</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊8/3⌋ = 2</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">1</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">4</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">3</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 1 ≤ 2 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complex -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Complex Polygon</h2>
+          <span class="badge">14 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">14</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">12</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">3</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊14/3⌋ = 4</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">3</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">6</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">5</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 3 ≤ 4 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Star -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Star Polygon</h2>
+          <span class="badge">12 Vertices</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">12</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">10</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">3</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊12/3⌋ = 4</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">3</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">5</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">4</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 3 ≤ 4 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- RANDOM POLYGONS -->
+    <div style="margin-bottom: 40px;">
+      <h3 style="color: #667eea; font-size: 1.5em; margin-bottom: 20px;">Random Polygons (Truly Scattered Points)</h3>
+
+      <!-- Random 8 -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Random Polygon (8)</h2>
+          <span class="badge">8 Vertices • Scattered</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">8</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">6</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">2</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊8/3⌋ = 2</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">3</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">3</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">2</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 2 ≤ 2 ✅<br>
+                <strong>Domain:</strong> [-100, 100] × [-100, 100]
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Random 12 -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Random Polygon (12)</h2>
+          <span class="badge">12 Vertices • Scattered</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">12</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">10</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">2</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊12/3⌋ = 4</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">4</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">4</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">4</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 2 ≤ 4 ✅<br>
+                <strong>Domain:</strong> [-100, 100] × [-100, 100]
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Random 20 -->
+      <div class="polygon-section">
+        <div class="polygon-header">
+          <h2>Random Polygon (20)</h2>
+          <span class="badge">20 Vertices • Scattered</span>
+        </div>
+        <div class="polygon-data">
+          <div>
+            <div class="data-section">
+              <h3>📊 Basic Information</h3>
+              <div class="data-grid">
+                <div class="data-item"><div class="data-label">Vertices</div><div class="data-value">20</div></div>
+                <div class="data-item"><div class="data-label">Triangles</div><div class="data-value">18</div></div>
+                <div class="data-item"><div class="data-label">Guards</div><div class="data-value">6</div></div>
+                <div class="data-item"><div class="data-label">Bound</div><div class="data-value">⌊20/3⌋ = 6</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="data-section">
+              <h3>🎨 Color Distribution</h3>
+              <div class="color-distribution">
+                <div class="color-row">
+                  <div class="color-bar" style="background: #FF0000;"></div>
+                  <div class="color-text">Red</div>
+                  <div class="color-count">8</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #00CC00;"></div>
+                  <div class="color-text">Green</div>
+                  <div class="color-count">6</div>
+                </div>
+                <div class="color-row">
+                  <div class="color-bar" style="background: #0066FF;"></div>
+                  <div class="color-text">Blue</div>
+                  <div class="color-count">6</div>
+                </div>
+              </div>
+              <div class="guard-info">
+                ✓ Bound: 6 ≤ 6 ✅<br>
+                <strong>Domain:</strong> [-100, 100] × [-100, 100]
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SUMMARY TABLE -->
+    <h2 style="color: #667eea; font-size: 1.8em; margin-bottom: 30px;">📊 Complete Summary</h2>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Polygon</th>
+          <th>Vertices</th>
+          <th>Triangles</th>
+          <th style="color: #FF0000;">🔴 Red</th>
+          <th style="color: #00CC00;">🟢 Green</th>
+          <th style="color: #0066FF;">🔵 Blue</th>
+          <th>Guards</th>
+          <th>Bound ⌊n/3⌋</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Triangle</strong></td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Rectangle</strong></td><td>4</td><td>2</td><td>1</td><td>2</td><td>1</td><td>1</td><td>1</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Pentagon</strong></td><td>5</td><td>3</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Hexagon</strong></td><td>6</td><td>4</td><td>1</td><td>3</td><td>2</td><td>1</td><td>2</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Octagon</strong></td><td>8</td><td>6</td><td>1</td><td>4</td><td>3</td><td>1</td><td>2</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Complex</strong></td><td>14</td><td>12</td><td>3</td><td>6</td><td>5</td><td>3</td><td>4</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Star</strong></td><td>12</td><td>10</td><td>3</td><td>5</td><td>4</td><td>3</td><td>4</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Random (8)</strong></td><td>8</td><td>6</td><td>3</td><td>3</td><td>2</td><td>2</td><td>2</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Random (12)</strong></td><td>12</td><td>10</td><td>4</td><td>4</td><td>4</td><td>2</td><td>4</td><td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Random (20)</strong></td><td>20</td><td>18</td><td>8</td><td>6</td><td>6</td><td>6</td><td>6</td><td>✅</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <h3 style="color: #667eea; margin-bottom: 15px;">✅ Complete Analysis Summary</h3>
+      <p>
+        <strong>Total Test Cases:</strong> 10 | 
+        <strong>Success Rate:</strong> 100% | 
+        <strong>All Bounds Satisfied:</strong> ✅ Yes
+      </p>
+      <p style="margin-top: 15px; font-size: 0.95em;">
+        <strong>Bound Formula:</strong> ⌊n/3⌋ (floor of n divided by 3)<br>
+        All polygons satisfy Chvátal's theoretical bound for the Art Gallery Problem.
+      </p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

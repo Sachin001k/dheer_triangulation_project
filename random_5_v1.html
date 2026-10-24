@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Art Gallery Problem Visualization</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  svg { border: 1px solid #ccc; background-color: #f9f9f9; }
+  .info { margin-top: 20px; padding: 10px; background-color: #f0f0f0; }
+</style>
+</head>
+<body>
+<h1>Art Gallery Problem - Triangulation & Guard Placement</h1>
+<svg width="247.256" height="239.629">
+<defs>
+  <style>
+    .polygon-edge { stroke: #000; stroke-width: 2.5; fill: none; }
+    .diagonal { stroke: #999; stroke-width: 1.5; fill: none; stroke-dasharray: 5,5; opacity: 0.7; }
+    .vertex { fill: #333 !important; stroke: #000 !important; stroke-width: 1.5 !important; }
+    .vertex-red { }
+    .vertex-green { }
+    .vertex-blue { }
+    .guard-marker { }
+    .vertex-label { font-size: 12px; fill: black; font-weight: bold; font-family: Arial; text-shadow: 1px 1px 2px white; }
+  </style>
+</defs>
+<!-- Triangulation Diagonals -->
+<line x1="70.1586" y1="92.7503" x2="58.9183" y2="189.629" class="diagonal"/>
+<line x1="58.9183" y1="189.629" x2="197.256" y2="129.659" class="diagonal"/>
+<line x1="197.256" y1="129.659" x2="70.1586" y2="92.7503" class="diagonal"/>
+<!-- Triangle with colors: Red, Green, Blue -->
+<line x1="70.1586" y1="92.7503" x2="197.256" y2="129.659" class="diagonal"/>
+<line x1="197.256" y1="129.659" x2="114.787" y2="74.7751" class="diagonal"/>
+<line x1="114.787" y1="74.7751" x2="70.1586" y2="92.7503" class="diagonal"/>
+<!-- Triangle with colors: Red, Blue, Green -->
+<line x1="114.787" y1="74.7751" x2="50" y2="50" class="diagonal"/>
+<line x1="50" y1="50" x2="70.1586" y2="92.7503" class="diagonal"/>
+<line x1="70.1586" y1="92.7503" x2="114.787" y2="74.7751" class="diagonal"/>
+<!-- Triangle with colors: Green, Blue, Red -->
+<!-- Polygon Edges -->
+<line x1="58.9183" y1="189.629" x2="197.256" y2="129.659" class="polygon-edge"/>
+<line x1="197.256" y1="129.659" x2="114.787" y2="74.7751" class="polygon-edge"/>
+<line x1="114.787" y1="74.7751" x2="50" y2="50" class="polygon-edge"/>
+<line x1="50" y1="50" x2="70.1586" y2="92.7503" class="polygon-edge"/>
+<line x1="70.1586" y1="92.7503" x2="58.9183" y2="189.629" class="polygon-edge"/>
+<!-- Vertices -->
+<circle cx="58.9183" cy="189.629" r="8" fill="#00CC00" stroke="#009900" stroke-width="2.5" class="vertex-green" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="72.9183" y="194.629" class="vertex-label" font-weight="bold">0</text>
+<circle cx="197.256" cy="129.659" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="211.256" y="134.659" class="vertex-label" font-weight="bold">1</text>
+<circle cx="114.787" cy="74.7751" r="8" fill="#00CC00" stroke="#009900" stroke-width="2.5" class="vertex-green" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="128.787" y="79.7751" class="vertex-label" font-weight="bold">2</text>
+<circle cx="50" cy="50" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="64" y="55" class="vertex-label" font-weight="bold">3</text>
+<rect x="60.1586" y="82.7503" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="3" rx="2" style="filter: drop-shadow(0 0 2px rgba(255,100,0,0.3));"/>
+<circle cx="70.1586" cy="92.7503" r="9" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="84.1586" y="97.7503" class="vertex-label" font-weight="bold">4</text>
+<!-- Guard Markers -->
+<rect x="60.1586" y="82.7503" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="2" class="guard-marker"/>
+</svg>
+<div class="info">
+<h3>Problem Statistics</h3>
+<p><b>Polygon Vertices:</b> 5</p>
+<p><b>Triangles:</b> 3 (expected: 3)</p>
+<p><b>Color Distribution:</b> 🔴 Red=1, 🟢 Green=2, 🔵 Blue=2</p>
+<p><b>Guards Required:</b> 1</p>
+<p><b>Theoretical Bound:</b> ⌈5/3⌉ = 2</p>
+<p><b>Bound Satisfied:</b> ✓ Yes</p>
+</div>
+</body>
+</html>

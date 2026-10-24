@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Art Gallery Problem Visualization</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  svg { border: 1px solid #ccc; background-color: #f9f9f9; }
+  .info { margin-top: 20px; padding: 10px; background-color: #f0f0f0; }
+</style>
+</head>
+<body>
+<h1>Art Gallery Problem - Triangulation & Guard Placement</h1>
+<svg width="297.086" height="294.763">
+<defs>
+  <style>
+    .polygon-edge { stroke: #000; stroke-width: 2.5; fill: none; }
+    .diagonal { stroke: #999; stroke-width: 1.5; fill: none; stroke-dasharray: 5,5; opacity: 0.7; }
+    .vertex { fill: #333 !important; stroke: #000 !important; stroke-width: 1.5 !important; }
+    .vertex-red { }
+    .vertex-green { }
+    .vertex-blue { }
+    .guard-marker { }
+    .vertex-label { font-size: 12px; fill: black; font-weight: bold; font-family: Arial; text-shadow: 1px 1px 2px white; }
+  </style>
+</defs>
+<!-- Triangulation Diagonals -->
+<line x1="76.4325" y1="148.692" x2="50" y2="156.84" class="diagonal"/>
+<line x1="50" y1="156.84" x2="56.3477" y2="174.28" class="diagonal"/>
+<line x1="56.3477" y1="174.28" x2="76.4325" y2="148.692" class="diagonal"/>
+<!-- Triangle with colors: Red, Green, Blue -->
+<line x1="76.4325" y1="148.692" x2="56.3477" y2="174.28" class="diagonal"/>
+<line x1="56.3477" y1="174.28" x2="79.0526" y2="180.059" class="diagonal"/>
+<line x1="79.0526" y1="180.059" x2="76.4325" y2="148.692" class="diagonal"/>
+<!-- Triangle with colors: Red, Blue, Green -->
+<line x1="118.573" y1="81.3287" x2="76.4325" y2="148.692" class="diagonal"/>
+<line x1="76.4325" y1="148.692" x2="79.0526" y2="180.059" class="diagonal"/>
+<line x1="79.0526" y1="180.059" x2="118.573" y2="81.3287" class="diagonal"/>
+<!-- Triangle with colors: Blue, Red, Green -->
+<line x1="118.573" y1="81.3287" x2="79.0526" y2="180.059" class="diagonal"/>
+<line x1="79.0526" y1="180.059" x2="122.297" y2="158.585" class="diagonal"/>
+<line x1="122.297" y1="158.585" x2="118.573" y2="81.3287" class="diagonal"/>
+<!-- Triangle with colors: Blue, Green, Red -->
+<line x1="118.573" y1="81.3287" x2="122.297" y2="158.585" class="diagonal"/>
+<line x1="122.297" y1="158.585" x2="130.399" y2="156.396" class="diagonal"/>
+<line x1="130.399" y1="156.396" x2="118.573" y2="81.3287" class="diagonal"/>
+<!-- Triangle with colors: Blue, Red, Green -->
+<line x1="130.399" y1="156.396" x2="74.2001" y2="244.763" class="diagonal"/>
+<line x1="74.2001" y1="244.763" x2="188.827" y2="204.026" class="diagonal"/>
+<line x1="188.827" y1="204.026" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Blue, Red -->
+<line x1="130.399" y1="156.396" x2="188.827" y2="204.026" class="diagonal"/>
+<line x1="188.827" y1="204.026" x2="205.828" y2="182.261" class="diagonal"/>
+<line x1="205.828" y1="182.261" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Red, Blue -->
+<line x1="130.399" y1="156.396" x2="205.828" y2="182.261" class="diagonal"/>
+<line x1="205.828" y1="182.261" x2="247.086" y2="138.123" class="diagonal"/>
+<line x1="247.086" y1="138.123" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Blue, Red -->
+<line x1="130.399" y1="156.396" x2="247.086" y2="138.123" class="diagonal"/>
+<line x1="247.086" y1="138.123" x2="213.279" y2="73.5743" class="diagonal"/>
+<line x1="213.279" y1="73.5743" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Red, Blue -->
+<line x1="130.399" y1="156.396" x2="213.279" y2="73.5743" class="diagonal"/>
+<line x1="213.279" y1="73.5743" x2="217.523" y2="58.4253" class="diagonal"/>
+<line x1="217.523" y1="58.4253" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Blue, Red -->
+<line x1="130.399" y1="156.396" x2="217.523" y2="58.4253" class="diagonal"/>
+<line x1="217.523" y1="58.4253" x2="216.347" y2="50" class="diagonal"/>
+<line x1="216.347" y1="50" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Red, Blue -->
+<line x1="130.399" y1="156.396" x2="216.347" y2="50" class="diagonal"/>
+<line x1="216.347" y1="50" x2="145.084" y2="133.565" class="diagonal"/>
+<line x1="145.084" y1="133.565" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Blue, Red -->
+<line x1="130.399" y1="156.396" x2="145.084" y2="133.565" class="diagonal"/>
+<line x1="145.084" y1="133.565" x2="118.573" y2="81.3287" class="diagonal"/>
+<line x1="118.573" y1="81.3287" x2="130.399" y2="156.396" class="diagonal"/>
+<!-- Triangle with colors: Green, Red, Blue -->
+<!-- Polygon Edges -->
+<line x1="76.4325" y1="148.692" x2="50" y2="156.84" class="polygon-edge"/>
+<line x1="50" y1="156.84" x2="56.3477" y2="174.28" class="polygon-edge"/>
+<line x1="56.3477" y1="174.28" x2="79.0526" y2="180.059" class="polygon-edge"/>
+<line x1="79.0526" y1="180.059" x2="122.297" y2="158.585" class="polygon-edge"/>
+<line x1="122.297" y1="158.585" x2="130.399" y2="156.396" class="polygon-edge"/>
+<line x1="130.399" y1="156.396" x2="74.2001" y2="244.763" class="polygon-edge"/>
+<line x1="74.2001" y1="244.763" x2="188.827" y2="204.026" class="polygon-edge"/>
+<line x1="188.827" y1="204.026" x2="205.828" y2="182.261" class="polygon-edge"/>
+<line x1="205.828" y1="182.261" x2="247.086" y2="138.123" class="polygon-edge"/>
+<line x1="247.086" y1="138.123" x2="213.279" y2="73.5743" class="polygon-edge"/>
+<line x1="213.279" y1="73.5743" x2="217.523" y2="58.4253" class="polygon-edge"/>
+<line x1="217.523" y1="58.4253" x2="216.347" y2="50" class="polygon-edge"/>
+<line x1="216.347" y1="50" x2="145.084" y2="133.565" class="polygon-edge"/>
+<line x1="145.084" y1="133.565" x2="118.573" y2="81.3287" class="polygon-edge"/>
+<line x1="118.573" y1="81.3287" x2="76.4325" y2="148.692" class="polygon-edge"/>
+<!-- Vertices -->
+<circle cx="76.4325" cy="148.692" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="90.4325" y="153.692" class="vertex-label" font-weight="bold">0</text>
+<rect x="40" y="146.84" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="3" rx="2" style="filter: drop-shadow(0 0 2px rgba(255,100,0,0.3));"/>
+<circle cx="50" cy="156.84" r="9" fill="#00CC00" stroke="#009900" stroke-width="2.5" class="vertex-green" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="64" y="161.84" class="vertex-label" font-weight="bold">1</text>
+<circle cx="56.3477" cy="174.28" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="70.3477" y="179.28" class="vertex-label" font-weight="bold">2</text>
+<rect x="69.0526" y="170.059" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="3" rx="2" style="filter: drop-shadow(0 0 2px rgba(255,100,0,0.3));"/>
+<circle cx="79.0526" cy="180.059" r="9" fill="#00CC00" stroke="#009900" stroke-width="2.5" class="vertex-green" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="93.0526" y="185.059" class="vertex-label" font-weight="bold">3</text>
+<circle cx="122.297" cy="158.585" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="136.297" y="163.585" class="vertex-label" font-weight="bold">4</text>
+<rect x="120.399" y="146.396" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="3" rx="2" style="filter: drop-shadow(0 0 2px rgba(255,100,0,0.3));"/>
+<circle cx="130.399" cy="156.396" r="9" fill="#00CC00" stroke="#009900" stroke-width="2.5" class="vertex-green" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="144.399" y="161.396" class="vertex-label" font-weight="bold">5</text>
+<circle cx="74.2001" cy="244.763" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="88.2001" y="249.763" class="vertex-label" font-weight="bold">6</text>
+<circle cx="188.827" cy="204.026" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="202.827" y="209.026" class="vertex-label" font-weight="bold">7</text>
+<circle cx="205.828" cy="182.261" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="219.828" y="187.261" class="vertex-label" font-weight="bold">8</text>
+<circle cx="247.086" cy="138.123" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="261.086" y="143.123" class="vertex-label" font-weight="bold">9</text>
+<circle cx="213.279" cy="73.5743" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="227.279" y="78.5743" class="vertex-label" font-weight="bold">10</text>
+<circle cx="217.523" cy="58.4253" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="231.523" y="63.4253" class="vertex-label" font-weight="bold">11</text>
+<circle cx="216.347" cy="50" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="230.347" y="55" class="vertex-label" font-weight="bold">12</text>
+<circle cx="145.084" cy="133.565" r="8" fill="#FF0000" stroke="#CC0000" stroke-width="2.5" class="vertex-red" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="159.084" y="138.565" class="vertex-label" font-weight="bold">13</text>
+<circle cx="118.573" cy="81.3287" r="8" fill="#0066FF" stroke="#003399" stroke-width="2.5" class="vertex-blue" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));"/>
+<text x="132.573" y="86.3287" class="vertex-label" font-weight="bold">14</text>
+<!-- Guard Markers -->
+<rect x="40" y="146.84" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="2" class="guard-marker"/>
+<rect x="69.0526" y="170.059" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="2" class="guard-marker"/>
+<rect x="120.399" y="146.396" width="20" height="20" fill="none" stroke="#FF4500" stroke-width="2" class="guard-marker"/>
+</svg>
+<div class="info">
+<h3>Problem Statistics</h3>
+<p><b>Polygon Vertices:</b> 15</p>
+<p><b>Triangles:</b> 13 (expected: 13)</p>
+<p><b>Color Distribution:</b> 🔴 Red=6, 🟢 Green=3, 🔵 Blue=6</p>
+<p><b>Guards Required:</b> 3</p>
+<p><b>Theoretical Bound:</b> ⌈15/3⌉ = 5</p>
+<p><b>Bound Satisfied:</b> ✓ Yes</p>
+</div>
+</body>
+</html>
